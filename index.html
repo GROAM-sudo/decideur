@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decideur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fafafa;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .spinning-number {
+            animation: spinNumber 0.1s infinite linear;
+        }
+
+        @keyframes spinNumber {
+            0% { opacity: 0.3; filter: blur(2px); }
+            50% { opacity: 0.7; filter: blur(4px); }
+            100% { opacity: 0.3; filter: blur(2px); }
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="text-slate-900 overflow-x-hidden">
+
+    <div class="flex min-h-screen">
+        <!-- Barre de navigation latérale -->
+        <aside id="sidebar" class="fixed lg:sticky top-0 left-0 h-screen w-72 bg-white border-r border-gray-200 p-6 flex flex-col z-50 transition-transform duration-300 -translate-x-full lg:translate-x-0">
+            <div class="flex items-center justify-between mb-10">
+                <div class="flex items-center gap-2 font-bold text-xl cursor-pointer" onclick="showSection('home')">
+                    <div class="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center">
+                        <i class="fas fa-bolt text-sm"></i>
+                    </div>
+                   Decideur
+                </div>
+                <button onclick="toggleSidebar()" class="lg:hidden p-1 hover:bg-gray-100 rounded-md">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <nav class="flex-1 space-y-2">
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Outils</div>
+                <button onclick="showSection('random-menu')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-blue-600 bg-gray-50 shadow-sm" data-id="random-menu">
+                    <i class="fas fa-dice"></i> Hasard
+                </button>
+                <button onclick="showSection('social')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:bg-gray-50" data-id="social">
+                    <i class="fas fa-users"></i> Mode Social
+                </button>
+                <button onclick="showSection('ai')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:bg-gray-50" data-id="ai">
+                    <i class="fas fa-robot"></i> Mode IA
+                </button>
+
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-8 mb-2 px-3">Infos</div>
+                <button onclick="showSection('pricing')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:bg-gray-50" data-id="pricing">
+                    <i class="fas fa-credit-card"></i> Abonnements
+                </button>
+                <button onclick="showSection('about')" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-gray-500 hover:bg-gray-50" data-id="about">
+                    <i class="fas fa-info-circle"></i> À propos
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="flex-1 min-w-0">
+            <!-- Header Mobile -->
+            <div class="lg:hidden p-4 flex items-center justify-between bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-gray-100">
+                <span class="font-bold text-lg">Decideur</span>
+                <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto">
+                
+                <!-- SECTION: ACCUEIL -->
+                <section id="home" class="section fade-in py-10 md:py-20 text-center">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-gray-900 text-white rounded-full text-xs font-medium mb-6">
+                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Projet SNT
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight">
+                        Hésiter, c'est <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">du passé</span>.
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                        Ce site aide les indecis
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="showSection('random-menu')" class="bg-gray-900 text-white py-4 px-8 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-gray-800 transition-all shadow-xl">
+                            Essayer le Hasard <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button onclick="showSection('about')" class="bg-white text-gray-700 border border-gray-200 py-4 px-8 rounded-xl font-bold hover:bg-gray-50 transition-all shadow-sm">
+                            En savoir plus
+                        </button>
+                    </div>
+                </section>
+
+                <!-- SECTION: MENU HASARD -->
+                <section id="random-menu" class="section hidden fade-in">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Hasard</h2>
+                        <p class="text-gray-500">De quoi avez vous besoin aujourd'hui ?</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div onclick="showSection('random-oracle')" class="cursor-pointer bg-white p-6 rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all text-center">
+                            <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-magic text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-2">Oui, non, peut-etre,...</h3>
+                            <p class="text-sm text-gray-500">Oui, Non, Peut-être... Une réponse immédiate à vos questions.</p>
+                        </div>
+                        <div onclick="showSection('random-number')" class="cursor-pointer bg-white p-6 rounded-xl border border-gray-200 hover:border-green-500 hover:shadow-lg transition-all text-center">
+                            <div class="w-14 h-14 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-hashtag text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-2">Nombre Mystère</h3>
+                            <p class="text-sm text-gray-500">Générez un chiffre entre deux limites (ex: entre 0 et 100).</p>
+                        </div>
+                        <div onclick="showSection('random-list')" class="cursor-pointer bg-white p-6 rounded-xl border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all text-center">
+                            <div class="w-14 h-14 bg-purple-50 text-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-list-ol text-2xl"></i>
+                            </div>
+                            <h3 class="font-bold text-xl mb-2">Sélecteur de Liste</h3>
+                            <p class="text-sm text-gray-500">Saisissez vos propres choix et laissez le site decider.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- OUTIL: ORACLE -->
+                <section id="random-oracle" class="section hidden fade-in max-w-md mx-auto">
+                    <button onclick="showSection('random-menu')" class="mb-6 text-gray-400 hover:text-blue-600"><i class="fas fa-arrow-left"></i> Retour</button>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-xl text-center">
+                        <i class="fas fa-circle-notch text-blue-500 text-4xl mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-6">Pose ta question</h2>
+                        <input id="oracle-question" type="text" placeholder="Est-ce que je devrais..." class="w-full p-4 bg-gray-50 border-2 border-transparent focus:border-blue-500 rounded-xl outline-none mb-4 text-center">
+                        <button onclick="runOracle()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-200">Consulter l'Oracle</button>
+                        
+                        <div id="oracle-result" class="hidden mt-8 pt-8 border-t border-gray-100 animate-in zoom-in">
+                            <p id="oracle-ans-text" class="text-4xl font-black text-gray-900 tracking-tight"></p>
+                            <button onclick="resetOracle()" class="mt-4 text-sm text-gray-400 hover:underline">Autre question</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- OUTIL: GENERATEUR DE NOMBRE -->
+                <section id="random-number" class="section hidden fade-in max-w-md mx-auto">
+                    <button onclick="showSection('random-menu')" class="mb-6 text-gray-400 hover:text-green-600"><i class="fas fa-arrow-left"></i> Retour</button>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-xl">
+                        <h2 class="text-2xl font-bold mb-6 text-center">Nombre Aléatoire</h2>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <label class="text-xs font-bold text-gray-400 uppercase">Min</label>
+                                <input id="num-min" type="number" value="0" class="w-full p-3 bg-gray-50 border-2 border-transparent rounded-lg text-center font-bold">
+                            </div>
+                            <div>
+                                <label class="text-xs font-bold text-gray-400 uppercase">Max</label>
+                                <input id="num-max" type="number" value="100" class="w-full p-3 bg-gray-50 border-2 border-transparent rounded-lg text-center font-bold">
+                            </div>
+                        </div>
+                        <div id="number-display" class="bg-gray-900 h-28 rounded-2xl flex items-center justify-center mb-6">
+                            <span id="number-value" class="text-6xl font-mono font-black text-white">0</span>
+                        </div>
+                        <button id="btn-gen-num" onclick="runNumberGen()" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700 shadow-lg shadow-green-200">Lancer la roue</button>
+                    </div>
+                </section>
+
+                <!-- OUTIL: SELECTEUR DE LISTE -->
+                <section id="random-list" class="section hidden fade-in max-w-lg mx-auto">
+                    <button onclick="showSection('random-menu')" class="mb-6 text-gray-400 hover:text-purple-600"><i class="fas fa-arrow-left"></i> Retour</button>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-xl">
+                        <h2 class="text-2xl font-bold mb-6">Tes options</h2>
+                        <div class="flex gap-2 mb-6">
+                            <input id="list-input" type="text" placeholder="Ajouter un choix..." class="flex-1 p-3 bg-gray-50 border rounded-lg outline-none focus:border-purple-500">
+                            <button onclick="addOption()" class="bg-purple-600 text-white px-4 rounded-lg"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div id="options-list" class="space-y-2 mb-8 max-h-48 overflow-y-auto">
+                            <!-- Les items s'afficheront ici -->
+                        </div>
+                        <button onclick="runListPicker()" class="w-full bg-purple-600 text-white font-bold py-4 rounded-xl hover:bg-purple-700 shadow-lg shadow-purple-200">Choisir au hasard</button>
+                    </div>
+
+                    <div id="list-result" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-6 bg-white/90 backdrop-blur-md">
+                        <div class="text-center">
+                            <p class="text-purple-600 font-bold uppercase tracking-widest mb-4">Le gagnant est</p>
+                            <h3 id="list-result-text" class="text-5xl md:text-7xl font-black mb-10 text-gray-900"></h3>
+                            <button onclick="closeListResult()" class="bg-gray-900 text-white py-3 px-8 rounded-xl font-bold">Continuer</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTIONS COMPLEMENTAIRES -->
+                <section id="social" class="section hidden fade-in py-10 text-center">
+                    <i class="fas fa-users text-5xl text-orange-500 mb-6"></i>
+                    <h2 class="text-3xl font-bold mb-4">Mode Social</h2>
+                    <p class="text-gray-500 mb-8 max-w-md mx-auto">Accédez aux débats simulés avec l'abonnement Social.</p>
+                    <button onclick="showSection('pricing')" class="bg-orange-500 text-white py-3 px-8 rounded-xl font-bold shadow-lg shadow-orange-100">Voir les tarifs</button>
+                </section>
+
+                <section id="ai" class="section hidden fade-in py-10 text-center">
+                    <i class="fas fa-robot text-5xl text-purple-500 mb-6"></i>
+                    <h2 class="text-3xl font-bold mb-4">Conseiller IA</h2>
+                    <p class="text-gray-500 mb-8 max-w-md mx-auto">Analyse logique avancée disponible dans l'offre Expert IA.</p>
+                    <button onclick="showSection('pricing')" class="bg-purple-600 text-white py-3 px-8 rounded-xl font-bold shadow-lg shadow-purple-100">Découvrir les offres</button>
+                </section>
+
+                <!-- SECTION: ABONNEMENTS -->
+                <section id="pricing" class="section hidden fade-in py-10">
+                    <h2 class="text-3xl font-bold text-center mb-10">Nos abonnements</h2>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 border rounded-2xl text-center">
+                            <h3 class="font-bold text-xl">Gratuit</h3>
+                            <div class="text-3xl font-black my-4">0€</div>
+                            <p class="text-sm text-gray-500 mb-6">Outils de hasard de base.</p>
+                            <button class="w-full py-2 border rounded-lg font-bold">Actuel</button>
+                        </div>
+                        <div class="bg-white p-6 border-2 border-blue-500 rounded-2xl text-center relative">
+                            <span class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase">Populaire</span>
+                            <h3 class="font-bold text-xl">Social</h3>
+                            <div class="text-3xl font-black my-4">2€</div>
+                            <p class="text-sm text-gray-500 mb-6">Simulation de débats communautaires.</p>
+                            <button class="w-full py-2 bg-blue-500 text-white rounded-lg font-bold">S'abonner</button>
+                        </div>
+                        <div class="bg-white p-6 border rounded-2xl text-center">
+                            <h3 class="font-bold text-xl">Expert IA</h3>
+                            <div class="text-3xl font-black my-4">5€</div>
+                            <p class="text-sm text-gray-500 mb-6">Logique poussée et argumentation.</p>
+                            <button class="w-full py-2 border rounded-lg font-bold">S'abonner</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION: A PROPOS -->
+                <section id="about" class="section hidden fade-in py-10 max-w-2xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-6">À propos du projet</h2>
+                    <div class="bg-white p-8 border rounded-2xl space-y-4 text-gray-600 leading-relaxed">
+                        <p>Ce site est un projet de<strong>SNT </strong>.</p>
+                        <p>Nous avons essayé d'utiliser le moins d'ia.</p>
+                        <p>L'application regroupe trois approches différentes : le hasard pur, l'aspect social et l'intelligence artificielle, illustrant ainsi diverses manières dont les algorithmes sont utilisés aujourd'hui.</p>
+                        <p>Merci d'avoir regardé le site web MR HAMMOUD.</p>
+                        <p>Thibault et Jules </p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Navigation ---
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Mise à jour de l'UI de navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const btnId = btn.getAttribute('data-id');
+                if (btnId === sectionId || (sectionId.startsWith('random-') && btnId === 'random-menu')) {
+                    btn.classList.add('bg-gray-50', 'text-blue-600');
+                    btn.classList.remove('text-gray-500');
+                } else {
+                    btn.classList.remove('bg-gray-50', 'text-blue-600');
+                    btn.classList.add('text-gray-500');
+                }
+            });
+            window.scrollTo(0, 0);
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        // --- LOGIQUE ORACLE ---
+        const ORACLE_ANSWERS = [
+            "Oui, absolument.", "Non, mauvaise idée.", "Peut-être...", 
+            "C'est certain !", "Jamais de la vie.", "Sûrement.", 
+            "Demande à nouveau plus tard.", "Dans tes rêves.", "Fonce !"
+        ];
+
+        function runOracle() {
+            const q = document.getElementById('oracle-question').value;
+            if(!q.trim()) return;
+
+            const resDiv = document.getElementById('oracle-result');
+            const resText = document.getElementById('oracle-ans-text');
+            
+            resDiv.classList.add('hidden');
+            
+            setTimeout(() => {
+                const ans = ORACLE_ANSWERS[Math.floor(Math.random() * ORACLE_ANSWERS.length)];
+                resText.innerText = ans;
+                resDiv.classList.remove('hidden');
+            }, 600);
+        }
+
+        function resetOracle() {
+            document.getElementById('oracle-question').value = "";
+            document.getElementById('oracle-result').classList.add('hidden');
+        }
+
+        // --- LOGIQUE GENERATEUR DE NOMBRE ---
+        let isSpinning = false;
+        function runNumberGen() {
+            if(isSpinning) return;
+            
+            const min = parseInt(document.getElementById('num-min').value);
+            const max = parseInt(document.getElementById('num-max').value);
+            const display = document.getElementById('number-value');
+            const btn = document.getElementById('btn-gen-num');
+            
+            if(isNaN(min) || isNaN(max) || min >= max) return;
+
+            isSpinning = true;
+            btn.innerText = "Tirage...";
+            display.classList.add('spinning-number');
+
+            let counter = 0;
+            const interval = setInterval(() => {
+                const temp = Math.floor(Math.random() * (max - min + 1)) + min;
+                display.innerText = temp;
+                counter++;
+                
+                if(counter > 20) {
+                    clearInterval(interval);
+                    const final = Math.floor(Math.random() * (max - min + 1)) + min;
+                    display.innerText = final;
+                    display.classList.remove('spinning-number');
+                    btn.innerText = "Relancer";
+                    isSpinning = false;
+                }
+            }, 80);
+        }
+
+        // --- LOGIQUE SELECTEUR DE LISTE ---
+        let options = [];
+
+        function addOption() {
+            const input = document.getElementById('list-input');
+            const val = input.value.trim();
+            if(val) {
+                options.push(val);
+                renderOptions();
+                input.value = "";
+            }
+        }
+
+        function renderOptions() {
+            const container = document.getElementById('options-list');
+            container.innerHTML = options.map((opt, i) => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 border rounded-lg">
+                    <span class="font-medium truncate">${opt}</span>
+                    <button onclick="removeOption(${i})" class="text-gray-300 hover:text-red-500"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function removeOption(index) {
+            options.splice(index, 1);
+            renderOptions();
+        }
+
+        function runListPicker() {
+            if(options.length < 2) return;
+            
+            const resultDiv = document.getElementById('list-result');
+            const resultText = document.getElementById('list-result-text');
+            
+            const winner = options[Math.floor(Math.random() * options.length)];
+            resultText.innerText = winner;
+            resultDiv.classList.remove('hidden');
+        }
+
+        function closeListResult() {
+            document.getElementById('list-result').classList.add('hidden');
+        }
+
+        // --- Initialisation ---
+        document.getElementById('list-input').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') addOption();
+        });
+    </script>
+</body>
+</html>>
+
